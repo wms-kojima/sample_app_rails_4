@@ -54,6 +54,10 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    carrierwave (1.1.0)
+      activemodel (>= 4.0.0)
+      activesupport (>= 4.0.0)
+      mime-types (>= 1.16)
     celluloid (0.16.0)
       timers (~> 4.0.0)
     childprocess (0.3.6)
@@ -82,6 +86,8 @@ GEM
       nokogiri (>= 1.5.0)
     cucumber-wire (0.0.1)
     diff-lcs (1.3)
+    erb2haml (0.1.5)
+      html2haml
     erubis (2.7.0)
     execjs (2.7.0)
     factory_girl (4.2.0)
@@ -112,6 +118,15 @@ GEM
       guard (~> 2.0)
       guard-compat (~> 1.0)
       spork (>= 0.8.4)
+    haml (5.0.1)
+      temple (>= 0.8.0)
+      tilt
+    haml-rails (1.0.0)
+      actionpack (>= 4.0.1)
+      activesupport (>= 4.0.1)
+      haml (>= 4.0.6, < 6.0)
+      html2haml (>= 1.0.1)
+      railties (>= 4.0.1)
     hike (1.2.3)
     hitimes (1.2.4)
     i18n (0.8.1)
@@ -178,12 +193,13 @@ GEM
       activesupport (= 4.2.8)
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
-    rake (12.0.0)
+    rake (10.5.0)
     rb-fsevent (0.9.8)
     rb-inotify (0.9.8)
       ffi (>= 0.5.0)
     rdoc (3.12.2)
       json (~> 1.4)
+    rmagick (2.16.0)
     rspec (2.99.0)
       rspec-core (~> 2.99.0)
       rspec-expectations (~> 2.99.0)
@@ -203,6 +219,8 @@ GEM
       rspec-core (~> 2.99.0)
       rspec-expectations (~> 2.99.0)
       rspec-mocks (~> 2.99.0)
+    ruby_parser (3.9.0)
+      sexp_processor (~> 4.1)
     rubyzip (0.9.9)
     sass (3.4.23)
     sass-rails (4.0.1)
@@ -217,6 +235,7 @@ GEM
       multi_json (~> 1.0)
       rubyzip (< 1.0.0)
       websocket (~> 1.0.4)
+    sexp_processor (4.9.0)
     slop (3.6.0)
     spork (1.0.0rc4)
     spork-rails (4.0.0)
@@ -232,6 +251,7 @@ GEM
       activesupport (>= 3.0)
       sprockets (~> 2.8)
     sqlite3 (1.3.13)
+    temple (0.8.0)
     test-unit (3.2.3)
       power_assert
     thor (0.19.4)
@@ -239,7 +259,7 @@ GEM
     tilt (1.4.1)
     timers (4.0.4)
       hitimes
-    turbolinks (1.1.1)
+    turbolinks (2.3.0)
       coffee-rails
     tzinfo (1.2.3)
       thread_safe (~> 0.1)
@@ -259,6 +279,7 @@ DEPENDENCIES
   bootstrap-sass (= 2.3.2.0)
   bootstrap-will_paginate (= 0.0.9)
   capybara (= 2.1.0)
+  carrierwave
   childprocess (= 0.3.6)
   coffee-rails (= 4.0.1)
   cucumber-rails (= 1.3.0)
@@ -269,11 +290,14 @@ DEPENDENCIES
   guard (= 2.6.1)
   guard-rspec (= 2.5.0)
   guard-spork (= 2.1.0)
+  haml-rails
   jbuilder (= 1.0.2)
   jquery-rails (= 3.0.4)
   pg (= 0.15.1)
   rails (= 4.2.8)
   rails_12factor (= 0.0.2)
+  rake (< 11.0)
+  rmagick
   rspec-rails
   sass-rails (= 4.0.1)
   sdoc (= 0.3.20)
@@ -282,7 +306,7 @@ DEPENDENCIES
   sprockets (= 2.11.0)
   sqlite3
   test-unit
-  turbolinks (= 1.1.1)
+  turbolinks (= 2.3.0)
   uglifier (= 2.1.1)
   will_paginate (= 3.0.4)
 
