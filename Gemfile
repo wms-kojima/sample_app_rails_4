@@ -13,6 +13,7 @@ gem 'rake', '< 11.0'
 gem 'carrierwave'
 gem 'rmagick'
 gem 'haml-rails'
+gem 'dropzonejs-rails'
 
 group :development, :test do
   gem 'sqlite3'

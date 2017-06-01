@@ -2,6 +2,7 @@ SampleApp::Application.routes.draw do
   resources :users do
     member do
       get :following, :followers
+      post :upload_image
     end
   end
   resources :sessions,      only: [:new, :create, :destroy]

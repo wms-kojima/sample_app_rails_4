@@ -5,7 +5,7 @@
     = form_for(@user) do |f|
       = gravatar_for @user
       = f.label :image,"change"
-      = f.file_field :image, style: "display: none;"
+      = f.file_field :image
       = render 'shared/error_messages', object: f.object
       = f.label :name
       = f.text_field :name
@@ -16,3 +16,7 @@
       = f.label :password_confirmation, "Confirm Password"
       = f.password_field :password_confirmation
       = f.submit "Save changes", class: "btn btn-large btn-primary"
+
+= form_tag(upload_image_user_path, class: 'dropzone', id: 'upload-dropzone') do
+  .fallback
+    = file_field_tag('user[image]')

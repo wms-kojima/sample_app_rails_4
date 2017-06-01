@@ -40,6 +40,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def upload_image
+    @user = User.find(params[:id])
+    image = params[:file]
+    render status: 200, json: @user, nothing: true
+  end
+
   def destroy
     User.find(params[:id]).destroy
     flash[:success] = "User destroyed."
