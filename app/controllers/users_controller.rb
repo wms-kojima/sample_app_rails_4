@@ -42,7 +42,8 @@ class UsersController < ApplicationController
 
   def upload_image
     @user = User.find(params[:id])
-    image = params[:file]
+    @user.update_attribute(:image, params[:file])
+
     render status: 200, json: @user, nothing: true
   end
 
