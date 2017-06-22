@@ -6,7 +6,8 @@
       = gravatar_for @user
       = f.label :image,"image_change"
       .img_dropzone
-        画像を変更できます<br>ファイルをドラッグアンドドロップしてください
+        画像を変更できます
+        %br ファイルをドラッグアンドドロップしてください
 
       = render 'shared/error_messages', object: f.object
       = f.label :name
