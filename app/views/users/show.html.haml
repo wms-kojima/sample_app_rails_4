@@ -9,9 +9,9 @@
       = render 'shared/stats'
   .span8
     = render 'follow_form' if signed_in?
-    - if @user.microposts.any?
+    - if @user.tasks.any?
       %h3
-        Microposts (#{@user.microposts.count})
-      %ol.microposts
-        = render @microposts
-      = will_paginate @microposts
+        Tasks (#{@user.tasks.count})
+      %ol.tasks
+        = render @tasks
+      = will_paginate @tasks

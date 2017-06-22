@@ -5068,11 +5068,11 @@ input {
     .users li:last-child {
       border-bottom: 1px solid #eeeeee; }
 
-/* microposts */
-.microposts {
+/* tasks */
+.tasks {
   list-style: none;
   margin: 10px 0 0 0; }
-  .microposts li {
+  .tasks li {
     padding: 10px 0;
     border-top: 1px solid #e8e8e8; }
 

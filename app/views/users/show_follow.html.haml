@@ -6,8 +6,8 @@
       %h1= @user.name
       %span= link_to "view my profile", @user
       %span
-        %b Microposts:
-        = @user.microposts.count
+        %b Tasks:
+        = @user.tasks.count
     %section
       = render 'shared/stats'
       - if @users.any?
