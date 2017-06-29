@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :signed_in_user, only: [:create, :destroy]
+  before_action :signed_in_user, only: [:create, :destroy, :change_status]
   before_action :correct_user,   only: :destroy
 
   def create
@@ -15,6 +15,13 @@ class TasksController < ApplicationController
 
   def destroy
     @task.destroy
+    redirect_to root_url
+  end
+
+  def change_status
+    @task = current_user.tasks.find_by(id: params[:task_id])
+    @task.send(params[:action_name])
+    @task.save
     redirect_to root_url
   end
 

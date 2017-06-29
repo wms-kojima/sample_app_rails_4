@@ -14,6 +14,7 @@ gem 'carrierwave'
 gem 'rmagick'
 gem 'haml-rails'
 gem 'jquery-turbolinks'
+gem 'aasm'
 
 group :development, :test do
   gem 'sqlite3'
