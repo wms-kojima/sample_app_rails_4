@@ -3,6 +3,9 @@
   %span.user
     = link_to feed_item.user.name, feed_item.user
   %span.content= feed_item.content
+  %span.content
+    status :
+    = feed_item.status
   %span.timestamp
     Posted #{time_ago_in_words(feed_item.created_at)} ago.
   - if current_user?(feed_item.user)
