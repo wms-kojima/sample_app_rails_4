@@ -1,0 +1,14 @@
+%p
+  %b Name:
+  = @project.name
+
+= link_to 'Edit', edit_project_path(@project)
+\|
+= link_to 'Back', projects_path
+
+= render 'shared/task_form'
+
+- if @feed_items.any?
+  %ol.tasks
+    = render partial: 'shared/feed_item', collection: @feed_items
+  = will_paginate @feed_items

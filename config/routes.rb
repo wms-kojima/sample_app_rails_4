@@ -1,4 +1,9 @@
 SampleApp::Application.routes.draw do
+  resources :projects do
+    resources :tasks, only: [:create, :destroy] do
+      post :change_status
+    end
+  end
   resources :users do
     member do
       get :following, :followers
@@ -6,9 +11,6 @@ SampleApp::Application.routes.draw do
     end
   end
   resources :sessions,      only: [:new, :create, :destroy]
-  resources :tasks,    only: [:create, :destroy] do
-    post :change_status
-  end
   resources :relationships, only: [:create, :destroy]
   root to: 'static_pages#home'
   match '/signup',  to: 'users#new',            via: 'get'
