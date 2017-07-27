@@ -1,11 +1,10 @@
 class TasksController < ApplicationController
-  before_action :signed_in_user, only: [:create, :destroy, :change_status]
-  before_action :correct_user,   only: :destroy
+  # before_action :signed_in_user, only: [:create, :destroy, :change_status]
+  # before_action :correct_user,   only: :destroy
 
   def create
     @project = Project.find(params[:project_id])
-    @task = current_user.tasks.build(task_params)
-    @task.project_id = @project.id
+    @task = @project.tasks.build(task_params)
     if @task.save
       flash[:success] = "task created!"
       redirect_to project_path(@project)
