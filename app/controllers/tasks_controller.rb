@@ -1,9 +1,8 @@
 class TasksController < ApplicationController
   # before_action :signed_in_user, only: [:create, :destroy, :change_status]
-  # before_action :correct_user,   only: :destroy
+  before_action :correct_project,   only: [:create, :destroy, :change_status, :edit, :update]
 
   def create
-    @project = Project.find(params[:project_id])
     @task = @project.tasks.build(task_params)
     if @task.save
       flash[:success] = "task created!"
@@ -15,25 +14,40 @@ class TasksController < ApplicationController
   end
 
   def destroy
+    @task = @project.tasks.find_by(id: params[:id])
     @task.destroy
-    redirect_to root_url
+    redirect_to project_path(@project)
   end
 
   def change_status
-    @task = current_user.tasks.find_by(id: params[:task_id])
+    @task = @project.tasks.find_by(id: params[:task_id])
     @task.send(params[:action_name])
     @task.save
-    redirect_to root_url
+    redirect_to project_path(@project)
+  end
+
+  def edit
+    @task = @project.tasks.find_by(id: params[:id])
+  end
+
+  def update
+    @task = @project.tasks.find_by(id: params[:id])
+    if @task.update_attributes(task_params)
+      flash[:success] = "Task updated"
+      redirect_to @project
+    else
+      render "edit"
+    end
   end
 
   private
 
     def task_params
-      params.require(:task).permit(:content)
+      params.require(:task).permit(:content, :planed_time, :actual_time)
     end
 
-    def correct_user
-      @task = current_user.tasks.find_by(id: params[:id])
-      redirect_to root_url if @task.nil?
+    def correct_project
+      @project = Project.find(params[:project_id])
+      redirect_to root_url if @project.nil?
     end
 end

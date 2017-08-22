@@ -11,7 +11,7 @@ class ProjectsController < ApplicationController
   # GET /projects/1.json
   def show
     if signed_in?
-      @feed_items = @project.tasks.paginate(page: params[:page])
+      @feed_items = @project.tasks.reverse
       @task = Task.new(project_id: @project.id)
     end
   end
@@ -73,6 +73,6 @@ class ProjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
-      params.require(:project).permit(:name, :user_id)
+      params.require(:project).permit(:name, :user_id, :start_date)
     end
 end
