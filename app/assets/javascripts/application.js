@@ -13,5 +13,5 @@
 //= require jquery
 //= require jquery_ujs
 //= require _honoka
-//= require fixed_midashi_src
+//= require jquery.tablefix.min
 //= require_tree .

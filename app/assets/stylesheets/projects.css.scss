@@ -3,15 +3,11 @@
 .task_table_container {
     position: relative;
     overflow: auto;
-    height: 300px;
-    width: 100%;
 }
 
 .task_table {
-  width: 40%;
   position: absolute;
   overflow: scroll;
-  table-layout: fixed;
   left: 0px;
   top: 0px;
   thead {
@@ -21,6 +17,5 @@
 
   th {
     text-align: center;
-    width: 180px;
   }
 }
