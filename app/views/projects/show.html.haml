@@ -14,26 +14,28 @@
       %thead
         %tr
           %th= "内容"
-          %th{ colspan: 2 }="ステータス"
+          %th{ class: "status" }= "ステータス"
           %th
-          %th= "予定工数（分）"
+          %th{ class: "plane_time" }= "予定"
           - @project.term.each do |date|
-            %th=date
+            %th{ class: "task_date" }= date.strftime("%-d")
           %th
-      - @feed_items.each do |feed_item|
-        %tr
-          %td= link_to feed_item.content, edit_project_task_path(@project, feed_item)
-          %td= status_name(feed_item.status)
-          - unless feed_item.done?
-            %td= link_to acition_name(feed_item), project_task_change_status_path(@project, feed_item, action_name: acition_name(feed_item)), method: :post, class: "btn btn-info"
-          -else
-            %td
-          %td= link_to "delete", project_task_path(@project, feed_item), method: :delete, |
-            data: { confirm: "本当に削除しますか？" },               |
-            title: feed_item.content                      |
-          %td= feed_item.planed_time
-          - @project.term.each do |date|
-            %td
-          %td= link_to "delete", project_task_path(@project, feed_item), method: :delete, |
-            data: { confirm: "本当に削除しますか？" },               |
-            title: feed_item.content                      |
+      %tbody.sortable
+        - @feed_items.each do |feed_item|
+          %tr{ class: "#{ 'done' if feed_item.done? } #{ 'not_started' if feed_item.not_started? }", data: { "task_id": feed_item.id } }
+            %td= link_to feed_item.content, edit_project_task_path(@project, feed_item)
+            - unless feed_item.done?
+              %td{ style: "text-align: center;" }= link_to acition_name(feed_item), project_task_change_status_path(@project, feed_item, action_name: acition_name(feed_item)), method: :post, class: "btn btn-info"
+            -else
+              %td{ style: "text-align: center;" }= status_name(feed_item.status)
+            %td= link_to "delete", project_task_path(@project, feed_item), method: :delete, |
+              data: { confirm: "本当に削除しますか？" },               |
+              title: feed_item.content                      |
+            %td{ style: "text-align: center;" }
+              %input{ type: "text", value: feed_item.planed_time, class: "planed_time_field" }
+            - @project.term.each do |date|
+              %td
+                = feed_item.dailies.find_by(the_date: date).try(:planed_time)
+            %td= link_to "delete", project_task_path(@project, feed_item), method: :delete, |
+              data: { confirm: "本当に削除しますか？" },               |
+              title: feed_item.content                      |

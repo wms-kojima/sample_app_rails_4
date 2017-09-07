@@ -1,15 +1,10 @@
 /* tasks */
 
 .task_table_container {
-    position: relative;
     overflow: auto;
 }
 
 .task_table {
-  position: absolute;
-  overflow: scroll;
-  left: 0px;
-  top: 0px;
   thead {
     background-color: rgba(34, 34, 34, .8);
     color: #eee;
@@ -18,4 +13,29 @@
   th {
     text-align: center;
   }
+}
+
+.task_table .task_date {
+  min-width: 35px;
+}
+
+.task_table .status {
+  min-width: 100px;
+}
+
+.task_table .plane_time {
+  min-width: 50px;
+}
+
+.task_table .done {
+  background-color: #f0f0f0;
+}
+
+.not_started {
+  background-color: #ffeff7;
+}
+
+.task_table > tbody > tr > td > .planed_time_field {
+  border: none;
+  background: none;
 }

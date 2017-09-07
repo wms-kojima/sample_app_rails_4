@@ -14,4 +14,5 @@
 //= require jquery_ujs
 //= require _honoka
 //= require jquery.tablefix.min
+//= require jquery-ui.min
 //= require_tree .
