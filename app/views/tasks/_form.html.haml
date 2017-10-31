@@ -1,0 +1,15 @@
+= form_for(@task, url: project_task_path(project_id: @project)) do |f|
+  = render 'shared/error_messages', object: f.object
+  .field
+    = f.label "内容"
+    = f.text_area :content, placeholder: "Compose new task..."
+  .field
+    = f.label "予定工数"
+    = f.number_field :planed_time
+  .field
+    = f.label "実績工数"
+    = f.number_field :actual_time
+  .field
+    = f.label "担当者"
+    = f.collection_select :user_id, User.all, :id, :name
+  = f.submit "Post", class: "btn btn-large btn-primary"

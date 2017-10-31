@@ -14,6 +14,7 @@
       %thead
         %tr
           %th= "内容"
+          %th= "担当者"
           %th{ class: "status" }= "ステータス"
           %th
           %th{ class: "plane_time" }= "予定"
@@ -24,6 +25,7 @@
         - @feed_items.each do |feed_item|
           %tr{ class: "#{ 'done' if feed_item.done? } #{ 'not_started' if feed_item.not_started? }", data: { "task_id": feed_item.id } }
             %td= link_to feed_item.content, edit_project_task_path(@project, feed_item)
+            %td= feed_item.user.name
             - unless feed_item.done?
               %td{ style: "text-align: center;" }= link_to acition_name(feed_item), project_task_change_status_path(@project, feed_item, action_name: acition_name(feed_item)), method: :post, class: "btn btn-info"
             -else
@@ -32,7 +34,7 @@
               data: { confirm: "本当に削除しますか？" },               |
               title: feed_item.content                      |
             %td{ style: "text-align: center;" }
-              %input{ type: "text", value: feed_item.planed_time, class: "planed_time_field" }
+              %input.planed_time_field{ type: "text", value: feed_item.planed_time }
             - @project.term.each do |date|
               %td
                 = feed_item.dailies.find_by(the_date: date).try(:planed_time)

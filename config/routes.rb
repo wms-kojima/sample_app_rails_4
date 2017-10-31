@@ -3,6 +3,9 @@ SampleApp::Application.routes.draw do
     resources :tasks, only: [:create, :destroy, :edit, :update] do
       post :change_status
     end
+    resource :tasks ,only: [] do
+      post :sort
+    end
   end
   resources :users do
     member do
