@@ -18,4 +18,8 @@ class Date
   def holiday?
     HolidayJp.holiday?(self)
   end
+
+  def youbi
+    %w(日 月 火 水 木 金 土)[self.wday]
+  end
 end

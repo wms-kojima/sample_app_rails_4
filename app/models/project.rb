@@ -1,7 +1,11 @@
 class Project < ActiveRecord::Base
   has_many :tasks, dependent: :destroy
+
   def term
-    # self.start_date + 18ここいい感じにする
-    (self.start_date..self.start_date + 40).select{ |d| (1..5).include?(d.wday) }
+    self.start_date.bussiness_dates(dailies)
+  end
+
+  def dailies
+    tasks.map(&:dailies).flatten.map(&:the_date).uniq.size
   end
 end

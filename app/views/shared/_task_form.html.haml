@@ -1,5 +1,5 @@
 = form_for(@task, url: project_tasks_path(project_id: @project)) do |f|
   = render 'shared/error_messages', object: f.object
-  .field
-    = f.text_area :content, placeholder: "Compose new task..."
-  = f.submit "Post", class: "btn btn-large btn-primary"
+  .field.pull-left.task_field
+    = f.text_area :content, placeholder: "タスク名を記入してください"
+  = f.submit "Post", class: "btn btn-large btn-primary task_form_button"
