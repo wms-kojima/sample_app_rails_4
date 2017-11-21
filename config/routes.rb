@@ -5,6 +5,7 @@ SampleApp::Application.routes.draw do
     end
     resource :tasks ,only: [] do
       post :sort
+      post :calculate
     end
   end
   resources :users do

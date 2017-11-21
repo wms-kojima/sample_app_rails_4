@@ -1,8 +1,9 @@
 class TasksController < ApplicationController
   # before_action :signed_in_user, only: [:create, :destroy, :change_status]
-  before_action :correct_project, only: [:create, :destroy, :change_status, :edit, :update, :sort]
+  before_action :correct_project, only: [:create, :destroy, :change_status, :edit, :update, :sort, :calculate]
   before_action :correct_task, only: [:destroy, :edit, :update]
-  before_action :project_tasks, only: [:sort]
+  before_action :project_tasks, only: [:sort, :calculate]
+  DAY_MAX_TIMES = 300
 
   def create
     @task = @project.tasks.build(task_params)
@@ -11,7 +12,7 @@ class TasksController < ApplicationController
       redirect_to project_path(@project)
     else
       @feed_items = []
-      render 'static_pages/home'
+      render "static_pages/home"
     end
   end
 
@@ -64,16 +65,21 @@ class TasksController < ApplicationController
   end
 
   def calculate
-    task_times = @tasks.each_with_object([]) do |task, task_times|
-      surplus_time = task_times.last.present? ? (300 - task_times.last.sum { |t| t[:time] }) : 300
+    create_dailies(task_times)
+    redirect_to project_path(@project)
+  end
+
+  def task_times
+    task_times = @tasks.order(:order).each_with_object([]) do |task, task_times|
+      surplus_time = task_times.last.present? ? (DAY_MAX_TIMES - task_times.last.sum { |t| t[:time] }) : DAY_MAX_TIMES
       task_last = task_times.last.present? ? task_times.last : task_times
 
       if surplus_time <= task.planed_time
         next_time = task.planed_time - surplus_time
-        task_last << time_hash(task_last, { id: task.id, time: surplus_time }) if !surplus_time.zero?
+        task_last << time_hash(task_last, { id: task.id, time: surplus_time }) unless surplus_time.zero?
 
-        div, mod = next_time.divmod(300)
-        div.times { |i| task_times << [{ id: task.id, time: 300 }] }
+        div, mod = next_time.divmod(DAY_MAX_TIMES)
+        div.times { |i| task_times << [{ id: task.id, time: DAY_MAX_TIMES }] }
         task_times << [{ id: task.id, time: mod }] unless mod.zero?
       else
         task_last << time_hash(task_last, { id: task.id, time: task.planed_time })
@@ -83,25 +89,36 @@ class TasksController < ApplicationController
 
   private
 
-    def time_hash(task_last, time_hash)
-      task_last.present? ? time_hash : [time_hash]
+  def create_dailies(task_times)
+    Daily.destroy_all(task_id: @tasks.map(&:id))
+    @project.start_date.bussiness_dates(task_times.size).zip(task_times).each do |date, tasks|
+      tasks.each do |t|
+        daily = Daily.find_or_create_by(the_date: date, task_id: t[:id])
+        daily.planed_time = t[:time]
+        daily.save
+      end
     end
+  end
 
-    def task_params
-      params.require(:task).permit(:content, :planed_time, :actual_time, :user_id)
-    end
+  def time_hash(task_last, time_hash)
+    task_last.present? ? time_hash : [time_hash]
+  end
 
-    def correct_project
-      @project = Project.find(params[:project_id])
-      redirect_to root_url if @project.nil?
-    end
+  def task_params
+    params.require(:task).permit(:content, :planed_time, :actual_time, :user_id)
+  end
 
-    def correct_task
-      @task = @project.tasks.find_by(id: params[:id])
-      redirect_to root_url if @task.nil?
-    end
+  def correct_project
+    @project = Project.find(params[:project_id])
+    redirect_to root_url if @project.nil?
+  end
 
-    def project_tasks
-      @tasks = @project.tasks.order(:order)
-    end
+  def correct_task
+    @task = @project.tasks.find_by(id: params[:id])
+    redirect_to root_url if @task.nil?
+  end
+
+  def project_tasks
+    @tasks = @project.tasks.order(:order)
+  end
 end

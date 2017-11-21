@@ -1,6 +1,6 @@
 $ ->
   $("#project_table").tablefix {
-    width: 1100
+    width: 1140
     height: 350
     fixRows: 1
   }
