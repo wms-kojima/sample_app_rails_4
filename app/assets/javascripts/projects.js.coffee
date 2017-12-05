@@ -5,18 +5,6 @@ $ ->
     fixRows: 1
   }
 
-  $(".planed_time_field").on "change", ->
-    task_id = $($($(this)).parent().parent()[0]).attr("data-task-id")
-    $.ajax document.URL + "/tasks/#{task_id}",
-      type: "PATCH",
-      dataType: "script",
-      data: {
-        task: {
-          planed_time: $(this)[0].value
-        }
-      }
-    return
-
   $(".sortable").sortable update: (event, ui) ->
     $.ajax document.URL + "/tasks/sort",
       type: "POST",
@@ -28,3 +16,18 @@ $ ->
     return
 
   $(".sortable").disableSelection();
+
+  $(".planed_time_field").on "change", ->
+    task_update $(this), { planed_time: $(this)[0].value }
+
+  $(".task_user_field").on "change", ->
+    task_update $(this), { user_id: $(this)[0].value }
+
+  task_update = (element, date) ->
+    task_id = $(element.parent().parent()).attr("data-task-id")
+    $.ajax document.URL + "/tasks/#{task_id}",
+      type: "PATCH",
+      dataType: "script",
+      data: {
+        task: date
+      }
