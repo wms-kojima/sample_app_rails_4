@@ -13,3 +13,11 @@
 .task_form_button {
   margin-left: 20px;
 }
+
+.edit_panel {
+  position: absolute;
+  float: left;
+  width: 600px;
+  z-index: 100;
+  box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.01);
+}

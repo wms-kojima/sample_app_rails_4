@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170914015456) do
+ActiveRecord::Schema.define(version: 20180110023211) do
 
   create_table "dailies", force: :cascade do |t|
     t.integer  "planed_time"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20170914015456) do
     t.integer  "planed_time"
     t.integer  "actual_time"
     t.integer  "order"
+    t.string   "name"
   end
 
   add_index "tasks", ["project_id"], name: "index_tasks_on_project_id"

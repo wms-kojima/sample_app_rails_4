@@ -28,7 +28,9 @@
       %tbody.sortable
         - @feed_items.each do |feed_item|
           %tr{ class: "#{ 'done' if feed_item.done? } #{ 'not_started' if feed_item.not_started? }", data: { "task_id": feed_item.id } }
-            %td= link_to feed_item.content, edit_project_task_path(@project, feed_item)
+            %td
+              = link_to feed_item.name, "#", class: "feed_item_title"
+              %input{ type: "hidden", value: feed_item.content, class: "feed_item_content" }
             %td= collection_select :task, :user_id, User.all, :id, :name, { :selected => feed_item.user.id }, { :class => "task_user_field" }
             - unless feed_item.done?
               %td{ style: "text-align: center;" }= link_to acition_name(feed_item), project_task_change_status_path(@project, feed_item, action_name: acition_name(feed_item)), method: :post, class: "btn btn-info"

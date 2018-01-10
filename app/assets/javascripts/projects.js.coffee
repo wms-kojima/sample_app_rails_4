@@ -17,6 +17,10 @@ $ ->
 
   $(".sortable").disableSelection();
 
+  $(".feed_item_title").on "click", ->
+    $(".edit_panel").remove()
+    $(this).after("<div class=\"panel edit_panel\"><div class=\"panel-body\">#{ $(this).text() }<br>#{ $(this).parent().find(".feed_item_content").val() }</div></div>")
+
   $(".planed_time_field").on "change", ->
     task_update $(this), { planed_time: $(this)[0].value }
 
