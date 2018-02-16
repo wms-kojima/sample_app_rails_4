@@ -17,7 +17,8 @@
 }
 
 .task_table .task_date {
-  min-width: 35px;
+  min-width: 40px;
+  max-width: 40px;
 }
 
 .task_table .status {
@@ -26,6 +27,7 @@
 
 .task_table .plane_time {
   min-width: 50px;
+  max-width: 50px;
 }
 
 .task_table .done {
@@ -39,4 +41,12 @@
 .task_table > tbody > tr > td > .planed_time_field {
   border: none;
   background: none;
+}
+
+.close {
+  border: none;
+}
+
+.project_table ~ p {
+  word-wrap: break-word;
 }

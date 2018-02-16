@@ -1,6 +1,6 @@
 SampleApp::Application.routes.draw do
   resources :projects do
-    resources :tasks, only: [:create, :destroy, :edit, :update] do
+    resources :tasks, only: [:create, :destroy, :edit, :update, :show] do
       post :change_status
     end
     resource :tasks ,only: [] do

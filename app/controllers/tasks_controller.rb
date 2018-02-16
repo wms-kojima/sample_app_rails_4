@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   # before_action :signed_in_user, only: [:create, :destroy, :change_status]
-  before_action :correct_project, only: [:create, :destroy, :change_status, :edit, :update, :sort, :calculate]
+  before_action :correct_project, only: [:create, :destroy, :change_status, :edit, :update, :sort, :calculate, :show]
   before_action :correct_task, only: [:destroy, :edit, :update]
   before_action :project_tasks, only: [:sort, :calculate]
   DAY_MAX_TIMES = 300
@@ -29,6 +29,13 @@ class TasksController < ApplicationController
   end
 
   def edit
+  end
+
+  def show
+    @task = @project.tasks.find_by(id: params[:task_id])
+    respond_to do |format|
+      format.json { render json: @task.to_json }
+    end
   end
 
   def update

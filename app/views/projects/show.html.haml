@@ -2,11 +2,11 @@
   %b プロジェクト名:
   = @project.name
 
-= link_to 'Edit', edit_project_path(@project)
+= link_to "Edit", edit_project_path(@project)
 \|
-= link_to 'Back', projects_path
+= link_to "Back", projects_path
 
-= render 'shared/task_form'
+= render "shared/task_form"
 .clearfix
   =button_to "自動計算", calculate_project_tasks_path(@project), class: "btn btn-primary pull-right"
 
@@ -27,10 +27,9 @@
           %th
       %tbody.sortable
         - @feed_items.each do |feed_item|
-          %tr{ class: "#{ 'done' if feed_item.done? } #{ 'not_started' if feed_item.not_started? }", data: { "task_id": feed_item.id } }
+          %tr{ class: "#{ 'done' if feed_item.done? } #{ 'not_started' if feed_item.not_started? } task_row", data: { "task_id": feed_item.id } }
             %td
-              = link_to feed_item.name, "#", class: "feed_item_title"
-              %input{ type: "hidden", value: feed_item.content, class: "feed_item_content" }
+              %label.feed_item_title #{feed_item.name}
             %td= collection_select :task, :user_id, User.all, :id, :name, { :selected => feed_item.user.id }, { :class => "task_user_field" }
             - unless feed_item.done?
               %td{ style: "text-align: center;" }= link_to acition_name(feed_item), project_task_change_status_path(@project, feed_item, action_name: acition_name(feed_item)), method: :post, class: "btn btn-info"
@@ -45,3 +44,5 @@
                 = feed_item.dailies.find_by(the_date: date).try(:planed_time)
             %td= link_to "delete", project_task_path(@project, feed_item), method: :delete,
               data: { confirm: "本当に削除しますか？" }, title: feed_item.content
+
+/ = render "tasks/edit_panel"
